@@ -4,9 +4,9 @@
 			<div class="mint-header-button is-left" @click="lehBack">
 				<i class="iconfont icon-wx-arr-left leh-c-white"></i>
 			</div>
-			<mt-button size="small" @click.prevent="active = 'case'" :class="{'leh-active' : active === 'case'}">病历</mt-button>
-			<mt-button size="small" @click.prevent="active = 'checked'" :class="{'leh-active' : active === 'checked'}">检查单</mt-button>
-			<mt-button size="small" @click.prevent="active = 'turn'" :class="{'leh-active' : active === 'turn'}">转换中</mt-button>
+			<mt-button size="small" @click.prevent="active = 'case'" :class="{'leh-active' : active === 'case'}"><span :class="{'leh-red-dot': medicalTabNum>0}">病历</span></mt-button>
+			<mt-button size="small" @click.prevent="active = 'checked'" :class="{'leh-active' : active === 'checked'}"><span :class="{'leh-red-dot': chkTabNum>0}">检查单</span></mt-button>
+			<mt-button size="small" @click.prevent="active = 'turn'" :class="{'leh-active' : active === 'turn'}"><span :class="{'leh-red-dot': filChkTabNum>0}">转换中</span></mt-button>
 		</div>
 		<div class="page-tab-container">
 			<mt-tab-container class="page-tabbar-tab-container" :active.sync="active">
@@ -131,15 +131,17 @@
 				pageFileCheckTotal: 0,   // 转换中列表总数
 				pageMedicalNum: 1,  // 病历列表页码
 				pageChkNum: 1,  // 检查单列表页码
-				pageFileCheckNum: 1   // 转换中列表页码
-
+				pageFileCheckNum: 1,   // 转换中列表页码
+				medicalTabNum:0,  //病历tab（未读数）
+				chkTabNum:0,  //检查单tab（未读数）
+				filChkTabNum:0  //未转换tab（未读数）
 			}
 		},
 
 		methods: {
 			// 跳转到拍照页面
 			toTurnUrl (dates) {
-				window.location.href='http://wx.leerhuo.com/html/pay/vue_turn.html?dates='+ dates;
+				window.location.href='http://test.leerhuo.com/html/pay/vue_turn.html?dates='+ dates;
 			},
 			lehBack () {
 				$(".leh-active").removeClass('leh-active')
@@ -174,7 +176,11 @@
 
 								_self.fileCheckItems = rsp_file_check.items
 								_self.pageFileCheckTotal = rsp_file_check.totalQty
-
+								getJson('api/records/unreadForMyOrder', '', (rsp_tab)=>{
+									_self.medicalTabNum = rsp_tab.medicalQty
+									_self.chkTabNum = rsp_tab.chkQty
+									_self.filChkTabNum = rsp_tab.fileChkQty
+								},_self)
 							},_self)
 						},_self)
 				},_self)

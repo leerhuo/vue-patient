@@ -4,8 +4,8 @@
             <div class="mint-header-button is-left" @click="lehBack">
                 <i class="iconfont icon-wx-arr-left leh-c-white"></i>
             </div>
-            <mt-button size="small" @click.prevent="active = 'book'" :class="{'leh-active' : active === 'book'}">预约列表</mt-button>
-            <mt-button size="small" @click.prevent="active = 'apply'" :class="{'leh-active' : active === 'apply'}">申请列表</mt-button>
+            <mt-button size="small" @click.prevent="active = 'book'" :class="{'leh-active' : active === 'book'}"><span :class="{'leh-red-dot':bookTabNum>0}">预约列表</span></mt-button>
+            <mt-button size="small" @click.prevent="active = 'apply'" :class="{'leh-active' : active === 'apply'}"><span :class="{'leh-red-dot':applyTabNum>0}">申请列表</span></mt-button>
         </div>
         <div class="page-tab-container">
             <mt-tab-container class="page-tabbar-tab-container" :active.sync="active">
@@ -109,18 +109,27 @@
                 bookQty:'',
                 applyQty:'',
                 bookNum:'',
-                applyNum:''
+                applyNum:'',
+                bookTabNum:0,
+                applyTabNum:0
             }
         },
         methods: {
             getBookList(){
                 let _self = this
+                //预约列表
                 getJson('api/telService/bookedIndex?pageIndex=1&pageSize=10', '', (rsp_book)=>{
                     _self.bookList = rsp_book.items
                     _self.bookQty = rsp_book.totalQty
+                    //申请列表
                     getJson('api/telService/appliedIndex?pageIndex=1&pageSize=10', '', (rsp_apply)=>{
                         _self.applyList = rsp_apply.items
                         _self.applyQty = rsp_apply.totalQty
+                        //头部tab
+                        getJson('api/telService/unreadForPreRecord', '', (rsp_tab)=>{
+                            _self.bookTabNum = rsp_tab.bookedQty
+                            _self.applyTabNum = rsp_tab.appliedQty
+                        },_self)
                     },_self)
 
                 },_self)
@@ -154,7 +163,7 @@
             goApplyContent(id){
                 //跳转申请详情页
                 //$(".leh-active").removeClass('leh-active')
-                window.location.href='http://wx.leerhuo.com/html/pay/vue_apply_v.html?id=' + id + '&isType=1';
+                window.location.href='http://test.leerhuo.com/html/pay/vue_apply_v.html?id=' + id + '&isType=1';
             }
         },
 
@@ -202,4 +211,5 @@
     .document-index-load-tap .mint-button--transparent{text-align: center;}
     .document-index-load-tap .icon-wx-load{color: #e5e5e5;}
     .document-index-load-tap .mint-button-text{font-size: 14px;}
+
 </style>

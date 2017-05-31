@@ -240,7 +240,7 @@
 				我的医生
 			</mt-tab-item>
 			<mt-tab-item id="个人中心">
-				<span slot="icon"><span class="mint-tab-item-icon"></span></span>
+				<span slot="icon"><span class="mint-tab-item-icon" :class="{'leh-red-dot':centerNum > 0}"></span></span>
 				个人中心
 			</mt-tab-item>
 		</mt-tabbar>
@@ -306,6 +306,10 @@
 									getJson('api/telService/unread', '', (rsp_tel)=>{
 										//未读预约数
 										 _self.bookNum = rsp_tel
+										getJson('api/telService/unreadForPersonalCenter','',(rsp_center)=>{
+											//个人中心未读预约数
+											_self.centerNum = rsp_center
+										},_self)
 									}, _self)
 								}, _self)
 							}, _self)
@@ -343,7 +347,8 @@
 				noticeNum:0, //判断有多少条未读公告
 				msgNum:0, //判断有多少条未读留言
 				bookList:[], // 我的预约
-				bookNum:0  //判断有多少条未读预约
+				bookNum:0,  //判断有多少条未读预约
+				centerNum:0 //个人中心未读预约数
 			};
 		},
 
@@ -488,6 +493,9 @@
 	.consult-notice-text{width: 85%;display: inline-block;}
 	.consult-notice-box .icon-wx-mark{float: left;margin-right: 12px;font-size: 17px;}
 	.consult-notice-close{position:absolute;right:10px;top:0;width:15%;height: 44px;overflow: hidden;background: url(../assets/img/notice-close.png) no-repeat right center;background-size: 15px;}
+
+	.consult-tabbar-box>.mint-tab-item .leh-red-dot:after{right: -6px;}
+
 	/*我的医生首页*/
 	.doctor-index-box .mint-cell:after{border: 0;}
 	.doctor-index-box .mint-cell:before{left: 10px;}
