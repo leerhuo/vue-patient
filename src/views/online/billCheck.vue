@@ -43,7 +43,11 @@
 			<span class="iconfont icon-wx-double-arr-down leh-c-grey-tint" :class="{'icon-wx-double-arr-up': tableHeight, 'icon-wx-double-arr-down': !tableHeight}"></span>
 		</div>
 
-		<!--侧滑内容-->
+	</mt-content>
+
+
+	<!--侧滑内容-->
+	<div class="page-popup">
 		<mt-popup v-show="popup_visible" position="right" class="mint-popup-3 sick-popup-box" :modal="false">
 			<div class="leh-modal-transparent" @click="closePopup"></div>
 			<div class="sick-popup-content">
@@ -61,7 +65,7 @@
 				</div>
 			</div>
 		</mt-popup>
-	</mt-content>
+	</div>
 
 	<!--// 提示框-->
 	<div class="page-popup">
