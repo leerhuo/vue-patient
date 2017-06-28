@@ -270,8 +270,23 @@ export default function (router) {
       component (resolve) {
         require(['./views/online/bookApply'], resolve)
       }
+    },
+    //退款申请
+    '/user/return': {
+      component (resolve) {
+        require(['./views/user/return'], resolve)
+      }
+    },
+    '/user/returnText': {
+      component (resolve) {
+        require(['./views/user/returnText'], resolve)
+      }
+    },
+    '/user/returnNum': {
+      component (resolve) {
+        require(['./views/user/returnNum'], resolve)
+      }
     }
-
   })
 
   router.beforeEach(({to, from, next}) => {

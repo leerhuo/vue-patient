@@ -3,6 +3,7 @@
         <mt-button v-link="'/user/wallet'" icon="arr-left" slot="left"></mt-button>
     </mt-header>
     <mt-content :class="{'leh-bg-grey-body':orderList.length != 0}">
+        <p class="return-tip-box" v-if="orderList.length != 0" v-link="'/user/returnText'">订单退款须知<span class="iconfont icon-wx-arr-right fr"></span></p>
         <div class="bill-title">
             <ul>
                 <li class="bill-title-list">
@@ -53,8 +54,13 @@
 										<p v-if="items.pay_status == 1">支付时间：<i v-text="items.pay_time"></i></p>
 									</span>
                             </label>
-                            <div class="mint-cell-value">
-                                <span></span>
+                            <div class="mint-cell-value" v-if="items.is_refund " @click="goRefund(items.service_type,items.refund_id,items.refund_status,items.real_money,items.pkid)">
+                                <!--修改的(退款)-->
+                                <span class="bill-content-tip-btn leh-c-green-strong" v-if="items.refund_status == -1">退款</span>
+                                <span class="bill-content-tip-btn leh-c-blue-strong" v-if="items.refund_status == 0">退款审核中</span>
+                                <span class="bill-content-tip-btn leh-c-orange-strong" v-if="items.refund_status == 1">退款成功</span>
+                                <span class="bill-content-tip-btn" v-if="items.refund_status == 2">退款关闭</span>
+                                <span class="bill-content-tip-btn leh-c-green-strong" v-if="items.refund_status == 3">退款待修改</span>
                             </div>
                         </a>
                     </div>
@@ -93,7 +99,7 @@
                 orderNum:1,
                 orderIf:false,
                 payNum:"0.00",
-                takeNum:"0.00",
+                takeNum:"0.00"
             }
         },
         methods:{
@@ -120,6 +126,13 @@
                   // 合并数组
                   _self.orderList = _self.orderList.concat(rsp_list.items)
               },_self)
+          },
+          goRefund(serviceType,refundId,refundStatus,refundMoney,listId){
+              if(refundStatus == 3){
+                  this.$route.router.go({path:'/user/return',query:{'servicType':serviceType,'refundId':refundId,'refundStatus':refundStatus,'refundMoney':refundMoney,'listId':listId,'txtClear':1,'isChange':0}, replace: true})
+              }else{
+                  this.$route.router.go({path:'/user/return',query:{'servicType':serviceType,'refundId':refundId,'refundStatus':refundStatus,'refundMoney':refundMoney,'listId':listId,'txtClear':1,'isChange':1}, replace: true})
+              }
           }
         },
         components: {
@@ -147,6 +160,10 @@
     .bill-content-list .mint-cell-text p:nth-of-type(even){margin-top: 10px;}
     .bill-content-list .mint-cell-label{margin-top: 8px;color: #363636;}
     .bill-content-list .mint-cell-label .icon-wx-pack{font-size: 20px;line-height: 14px;margin-right: 8px;color: #ffc040;}
+
+    .bill-content-tip-btn{height:25px;line-height:25px;min-width:60px;text-align: center;font-size: 13px;padding: 0 7px;border-radius: 5px;border-width: 1px;border-style: solid;display: inline-block;}
+    .return-tip-box{padding: 10px 10px;background-color: #fffad4;text-align: left;margin: 0 auto;line-height: 22px;font-size: 14px;color: #f77a66;overflow: hidden;}
+    .return-tip-box .icon-wx-arr-right{font-size: 12px;font-weight: normal;}
 
     .document-index-load-tap .mint-button--transparent{text-align: center;}
     .document-index-load-tap .icon-wx-load{color: #e5e5e5;}

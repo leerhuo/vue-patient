@@ -468,7 +468,7 @@
 	.consult-list-main .mint-cell-mask.icon-wx-loading{color: #fcdb57;}
 	.consult-list-main .mint-cell-mask.icon-wx-sick{color: #faa28d;}
 	.consult-list-main .mint-cell-mask.icon-wx-check{color: #81d9ff;}
-	.consult-list-main .mint-cell-value .icon-wx-arr-right{color: #aaa;}
+	.consult-list-main .mint-cell-value .icon-wx-arr-right{color: #aaa !important;}
 	.leh-ex .mint-cell-title{display: inline-block;width: 80px;position: relative;top:-1px;}
 	.consult-list-text{-webkit-box-flex: 2;-ms-flex: 2;flex: 2;}
 	.consult-list-text span span{margin-left: 12px;}

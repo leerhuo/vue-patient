@@ -175,9 +175,11 @@ label.mint-cell-title{
 .leh-c-blue {
 	color: #88c8ff;
 }
+
 .leh-c-blue-strong {
 	color: #1cadfe;
 }
+
 .leh-c-qing {
 	color: #28CF9B;
 }
@@ -201,9 +203,11 @@ label.mint-cell-title{
 .leh-c-red {
 	color: #ff6060;
 }
+
 .leh-c-red-strong {
 	color: #ff0707 !important;
 }
+
 .leh-c-yellow-green {
 	color: #c4de00;
 }
@@ -219,8 +223,16 @@ label.mint-cell-title{
 .leh-c-red-tint {
 	color: #ff9992;
 }
+
 .leh-c-orange-tint {
 	color: #ff9329;
+}
+
+.leh-c-orange-strong{
+	color: #ff8d2c;
+}
+.leh-c-green-strong {
+	color: #49b953;
 }
 .leh-bold {
 	font-weight: bold;
